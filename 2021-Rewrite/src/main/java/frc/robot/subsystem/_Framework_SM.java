@@ -12,10 +12,10 @@ import frc.util.Timer;
  */
 public class _Framework_SM {
     // Reference or Initialize hardware
-    private static VictorSP snorfMtr = IO.snorfMtr;
+    private static VictorSP snorfMtr;   // = IO.snorfMtr;
 
     // Reference or Initialize Joystick axis, buttons or pov
-    private static Button btnToggleSnorf = JS_IO.btnToggleSnorf;
+    private static Button btnToggleSnorf;   // = JS_IO.btnToggleSnorf;
 
     // Create objects for this SM
     private static int state = 0;
