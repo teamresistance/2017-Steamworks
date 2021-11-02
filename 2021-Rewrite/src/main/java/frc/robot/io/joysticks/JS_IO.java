@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//
 /**Declares all joysticks, buttons, axis & pov's.
  * <p>Handles various JS configuration with various button assignments.
  */
@@ -40,40 +39,29 @@ public class JS_IO {
     // Declare all stick control
 
     // Drive
-    public static Axis axLeftY = new Axis();        // Left JS Y - Added for testing in Drive3
-    public static Axis axLeftX = new Axis();        // Left JS X
-    public static Axis axRightY = new Axis();       // Right JS Y
-    public static Axis axRightX = new Axis();       // Right JS X
+    public static Axis axLeftY = new Axis();        // Left JS Y, Mecanum (Arcade) Left/Right turn
+    public static Axis axLeftX = new Axis();        // Left JS X, Mecanum (Arcade) Fwd/Bkwd
+    public static Axis axRightY = new Axis();       // Right JS Y, Mecanum Rotate orientation
+    public static Axis axRightX = new Axis();       // Right JS X, unassigned
 
-    public static Button btnScaledDrive = new Button();     // scale the drive
-    public static Button btnInvOrientation = new Button();  // invert the orientation of the robot (joystick: forwards
-                                                            // becomes backwards for robot and same for backwards)
+    //Gyro
+    public static Button btnGyroReset = new Button();       // reset gyro to 0
 
-    public static Button btnSelDrv = new Button();      //In teleop manually select between tank, arcade & curvature
-    public static Button btnHoldZero = new Button();    //Hold 0 heading.  Left stick moves fwd/bkwd
-    public static Button btnHold180 = new Button();     //Hold 180 heading.  Left stick moves fwd/bkwd
+    // No ideer
+    public static Button btnHoldLeft = new Button();        //??
+    public static Button btnHoldCenter = new Button();      //??
+    public static Button btnHoldRight = new Button();       //??
+
+    // Gear
+    public static Button btnPickupGear = new Button();     // Pickup gear off floor
+    public static Button btnPlaceGear = new Button();      // Place gear on ship peg
 
     // Shooter
-    public static Button btnFireShooter = new Button(); //Catapult boulder
-
-    // Snorfler
-    public static Button btnToggleSnorf = new Button();     //Toggle Snorfler up/dn
-    public static Button btnForwardSnorfler = new Button(); //Suckin the boulder
-    public static Button btnReverseSnorfler = new Button(); //Spitout the boulder
-    public static Pov povSnorfInOut = new Pov();    //Alt. for Fwd/Rev
+    public static Button btnShooter = new Button();     // Start shooter then feeder(s)
+    public static Button btnAgitator = new Button();    // Agitate the ball bin
 
     // Climb
-    public static Axis axClimb = new Axis();            //To move climber up or dn
-    public static Button btnClimbTop = new Button();    //Move climber to top
-    public static Button btnClimbBot = new Button();    //Move climber to bottom
-    public static Button btnClimbExt = new Button();    //Extend climber.  For testing only
-
-    //Flipper
-    public static Button btnFlipper = new Button(); //Extend Flipper down
-
-    //Antler
-    public static Button btnAntler = new Button();  //Extend Antlers down
-
+    public static Button btnClimber = new Button();     // Climber rotating
 
     // Constructor.  Don't need it.  Just bc.
     public JS_IO() {
@@ -144,120 +132,88 @@ public class JS_IO {
     private static void norm3JS() {
 
         // Drive
-        axLeftX.setAxis(leftJoystick, 0);
-        axLeftY.setAxis(leftJoystick, 1);
-        axRightX.setAxis(rightJoystick, 0);
-        axRightY.setAxis(rightJoystick, 1);
+        axLeftX.setAxis(leftJoystick, 0);       //Mecanum (Arcade) Left/Right turn
+        axLeftY.setAxis(leftJoystick, 1);       //Mecanum (Arcade) Fwd/Bkwd
+        axRightX.setAxis(rightJoystick, 0);     //Mecanum Rotate orientation
+        axRightY.setAxis(rightJoystick, 1);     //unassigned
 
-        btnScaledDrive.setButton(rightJoystick, 3);
-        btnInvOrientation.setButton(rightJoystick, 1);
+        btnGyroReset.setButton(rightJoystick, 6);    // reset gyro to 0
 
-        btnSelDrv.setButton(rightJoystick, 4);
-        btnHoldZero.setButton(rightJoystick, 5);
-        btnHold180.setButton(rightJoystick, 6);
-
+        btnHoldLeft.setAxis(rightJoystick, 4);       //??
+        btnHoldCenter.setAxis(rightJoystick,3);      //??
+        btnHoldRight.setAxis(rightJoystick, 5);      //??
+    
+        // Gear
+        btnPickupGear.setAxis(coJoystick, 2);     // Pickup gear off floor
+        btnPlaceGear.setAxis(coJoystick, 5);      // Place gear on ship peg
+    
         // Shooter
-        btnFireShooter.setButton(coJoystick, 1);
-
-        // Snorfler
-        btnToggleSnorf.setButton(coJoystick, 3);
-        btnForwardSnorfler.setButton(coJoystick, 5);
-        btnReverseSnorfler.setButton(coJoystick, 7);
-        povSnorfInOut.setPov(coJoystick, 0);
-
+        btnShooter.setAxis(coJoystick, 1);     // Start shooter then feeder(s)
+        btnAgitator.setAxis(coJoystick, 3);    // Agitate the ball bin
+    
         // Climb
-        axClimb.setAxis(coJoystick, 1);
-        btnClimbTop.setButton(coJoystick, 8);
-        btnClimbBot.setButton(coJoystick, 9);
-        btnClimbExt.setButton(leftJoystick, 10);  //For testing hdw only
-
-        //Flipper
-        btnFlipper.setButton(coJoystick, 10); //Extend Flipper down
-
-        //Antler
-        btnAntler.setButton(coJoystick, 11);  //Extend Antlers down
-
+        btnClimber.setAxis(coJoystick, 8);     // Climber rotating
+    
     }
 
     /**
      * ----- GamePad only Configurator --------
      */
     private static void a_GP() {
+
         // Drive
-        axLeftX.setAxis(gamePad, 0);
-        axLeftY.setAxis(gamePad, 1);
-        axRightX.setAxis(gamePad, 4);
-        axRightY.setAxis(gamePad, 5);
+        axLeftX.setAxis(gamePad, 0);    //Mecanum (Arcade) Left/Right turn
+        axLeftY.setAxis(gamePad, 1);    //Mecanum (Arcade) Fwd/Bkwd
+        axRightX.setAxis(gamePad, 4);   //Mecanum Rotate orientation
+        axRightY.setAxis(gamePad, 5);   //unassigned
 
-        // btnScaledDrive.setButton(gamePad, 5);
-        // btnInvOrientation.setButton(gamePad, 10);
+        btnGyroReset.setButton(gamePad, 7); //Reset / reset gyro to 0
 
-        // btnSelDrv.setButton(gamePad, 4);
-        // btnHoldZero.setButton(gamePad, 5);
-        // btnHold180.setButton(gamePad, 6);
-
+        btnHoldLeft.setAxis(gamePad, 4);    //Y / ??
+        btnHoldCenter.setAxis(gamePad,9);   //JSL / ??
+        btnHoldRight.setAxis(gamePad, 10);  //JSR / ??
+    
+        // Gear
+        btnPickupGear.setAxis(gamePad, 1);  //A / Pickup gear off floor
+        btnPlaceGear.setAxis(gamePad, 2);   //B / Place gear on ship peg
+    
         // Shooter
-        btnFireShooter.setButton(gamePad, 6);
-
-        // Snorfler
-        btnToggleSnorf.setButton(gamePad, 3); // switched with reverse button
-        btnForwardSnorfler.setButton(gamePad, 4);
-        btnReverseSnorfler.setButton(gamePad, 5); // switched with toggleSnorf
-        povSnorfInOut.setPov(gamePad, 0);
-
+        btnShooter.setAxis(gamePad, 6);     //RT / Start shooter then feeder(s)
+        btnAgitator.setAxis(gamePad, 3);    //X /  Agitate the ball bin
+    
         // Climb
-        axClimb.setAxis(gamePad, 1);
-        btnClimbTop.setButton(gamePad, 7);
-        btnClimbBot.setButton(gamePad, 8);
-        btnClimbExt.setButton(gamePad, 9);  //For testing hdw only
-
-        //Flipper
-        btnFlipper.setButton(gamePad, 1); //Extend Flipper down
-
-        //Antler
-        btnAntler.setButton(gamePad, 2);  //Extend Antlers down
+        btnClimber.setAxis(gamePad, 8);     //Start / Climber rotating
 
     }
 
-    // 
     /**
      * ----------- Normal 2 Joysticks Configurator -------------
      */
     private static void norm2JS() {
 
         // Drive
-        axLeftX.setAxis(leftJoystick, 0);
-        axLeftY.setAxis(leftJoystick, 1);
-        axRightX.setAxis(rightJoystick, 0);
-        axRightY.setAxis(rightJoystick, 1);
+        axLeftX.setAxis(leftJoystick, 0);       //Mecanum (Arcade) Left/Right turn
+        axLeftY.setAxis(leftJoystick, 1);       //Mecanum (Arcade) Fwd/Bkwd
+        axRightX.setAxis(rightJoystick, 0);     //Mecanum Rotate orientation
+        axRightY.setAxis(rightJoystick, 1);     //unassigned
 
-        btnScaledDrive.setButton(rightJoystick, 3);
-        btnInvOrientation.setButton(rightJoystick, 1);
+        btnGyroReset.setButton(rightJoystick, 6);    // reset gyro to 0
 
-        btnSelDrv.setButton(rightJoystick, 4);     //Added to test drive3
-        btnHoldZero.setButton(rightJoystick, 5);
-        btnHold180.setButton(rightJoystick, 6);
-
+        btnHoldLeft.setAxis(rightJoystick, 4);       //??
+        btnHoldCenter.setAxis(rightJoystick,3);      //??
+        btnHoldRight.setAxis(rightJoystick, 5);      //??
+    
+        // Gear
+        btnPickupGear.setAxis(leftJoystick, 2);     // Pickup gear off floor
+        btnPlaceGear.setAxis( leftJoystick, 5);      // Place gear on ship peg
+    
         // Shooter
-        btnFireShooter.setButton(leftJoystick, 1);
-
-        // Snorfler
-        btnToggleSnorf.setButton(leftJoystick, 3);
-        btnForwardSnorfler.setButton(leftJoystick, 5);
-        btnReverseSnorfler.setButton(leftJoystick, 7);
-        povSnorfInOut.setPov(leftJoystick, 0);
-
+        btnShooter.setAxis( leftJoystick, 1);     // Start shooter then feeder(s)
+        btnAgitator.setAxis(leftJoystick, 3);    // Agitate the ball bin
+    
         // Climb
-        axClimb.setAxis(leftJoystick, 0);
-        btnClimbTop.setButton(leftJoystick, 8);
-        btnClimbBot.setButton(leftJoystick, 9);
-        btnClimbExt.setButton(leftJoystick, 10);  //For testing hdw only
+        btnClimber.setAxis(leftJoystick, 8);     // Climber rotating
 
-        //Flipper
-        btnFlipper.setButton(rightJoystick, 10); //Extend Flipper down
-
-        //Antler
-        btnAntler.setButton(rightJoystick, 11);  //Extend Antlers down
     }
 
     /**
@@ -267,36 +223,27 @@ public class JS_IO {
     private static void caseDefault() {
 
         // Drive
-        axLeftX.setAxis(null, 0);
-        axLeftY.setAxis(null, 0);
-        axRightX.setAxis(null, 0);
-        axRightY.setAxis(null, 0);
+        axLeftX.setAxis(null, 0);       //Mecanum (Arcade) Left/Right turn
+        axLeftY.setAxis(null, 0);       //Mecanum (Arcade) Fwd/Bkwd
+        axRightX.setAxis(null, 0);     //Mecanum Rotate orientation
+        axRightY.setAxis(null, 0);     //unassigned
 
-        btnScaledDrive.setButton(null, 0);
-        btnInvOrientation.setButton(null, 0);
+        btnGyroReset.setButton(null, 0);    // reset gyro to 0
 
-        btnSelDrv.setButton(null, 0);     //Added to test drive3
-        btnHoldZero.setButton(null, 0);
-        btnHold180.setButton(null, 0);
-
+        btnHoldLeft.setAxis(null, 0);       //??
+        btnHoldCenter.setAxis(null, 0);      //??
+        btnHoldRight.setAxis(null, 0);      //??
+    
+        // Gear
+        btnPickupGear.setAxis(null, 0);     // Pickup gear off floor
+        btnPlaceGear.setAxis(null, 0);      // Place gear on ship peg
+    
         // Shooter
-        btnFireShooter.setButton(null, 0);
-
-        // Snorfler
-        btnToggleSnorf.setButton(null, 0);
-        btnForwardSnorfler.setButton(null, 0);
-        btnReverseSnorfler.setButton(null, 0);
-        povSnorfInOut.setPov(null, -1);
-
+        btnShooter.setAxis(null, 0);     // Start shooter then feeder(s)
+        btnAgitator.setAxis(null, 0);    // Agitate the ball bin
+    
         // Climb
-        axClimb.setAxis(null, 0);
-        btnClimbTop.setButton(null, 0);
-        btnClimbBot.setButton(null, 0);
+        btnClimber.setAxis(null, 0);     // Climber rotating
 
-        //Flipper
-        btnFlipper.setButton(null, 0); //Extend Flipper down
-
-        //Antler
-        btnAntler.setButton(null, 0);  //Extend Antlers down
     }
 }
