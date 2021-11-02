@@ -1,24 +1,30 @@
-// /*----------------------------------------------------------------------------*/
-// /* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-// /* Open Source Software - may be modified and shared by FRC teams. The code   */
-// /* must be accompanied by the FIRST BSD license file in the root directory of */
-// /* the project.                                                               */
-// /*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
-// package frc.robot.subsystem.drive;
+package frc.robot.subsystem.drive;
 
-// import edu.wpi.first.wpilibj.VictorSP;
-// import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.io.hdw_io.IO;
-// import frc.robot.io.joysticks.JS_IO;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.io.hdw_io.IO;
+import frc.robot.io.joysticks.JS_IO;
 
-// /**
-//  * 
-//  * Add your docs here.
-//  */
-// public class Drive {
+/**
+ * 
+ * Add your docs here.
+ */
+public class Drive {
+    public static MecanumDrive drv = new MecanumDrive(IO.leftFrontMotor, IO.leftRearMotor, IO.rightFrontMotor, IO.rightRearMotor);
 
+    public static void update()
+    {
+        drv.driveCartesian(JS_IO.axLeftX.get(), JS_IO.axLeftY.get(), JS_IO.axRightX.get());
+    }
+}
 //     public static VictorSP leftDrv = IO.leftDrv;
 //     public static VictorSP rightDrv = IO.rightDrv;
 //     private static int state;
@@ -169,4 +175,3 @@
 //         leftDrv.setSpeed(lSpeed);
 //         rightDrv.setSpeed(-rSpeed);
 //     }
-// }
