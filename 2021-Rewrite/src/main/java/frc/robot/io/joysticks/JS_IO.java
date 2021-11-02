@@ -51,6 +51,7 @@ public class JS_IO {
     public static Button btnHoldLeft = new Button();        //??
     public static Button btnHoldCenter = new Button();      //??
     public static Button btnHoldRight = new Button();       //??
+    public static Pov povHoldLCR = new Pov();               //Added for hdw test 0=L, 90=C, 180=R
 
     // Gear
     public static Button btnPickupGear = new Button();     // Pickup gear off floor
@@ -139,20 +140,20 @@ public class JS_IO {
 
         btnGyroReset.setButton(rightJoystick, 6);    // reset gyro to 0
 
-        btnHoldLeft.setAxis(rightJoystick, 4);       //??
-        btnHoldCenter.setAxis(rightJoystick,3);      //??
-        btnHoldRight.setAxis(rightJoystick, 5);      //??
+        btnHoldLeft.setButton(rightJoystick, 4);       //??
+        btnHoldCenter.setButton(rightJoystick,3);      //??
+        btnHoldRight.setButton(rightJoystick, 5);      //??
     
         // Gear
-        btnPickupGear.setAxis(coJoystick, 2);     // Pickup gear off floor
-        btnPlaceGear.setAxis(coJoystick, 5);      // Place gear on ship peg
+        btnPickupGear.setButton(coJoystick, 2);     // Pickup gear off floor
+        btnPlaceGear.setButton(coJoystick, 5);      // Place gear on ship peg
     
         // Shooter
-        btnShooter.setAxis(coJoystick, 1);     // Start shooter then feeder(s)
-        btnAgitator.setAxis(coJoystick, 3);    // Agitate the ball bin
+        btnShooter.setButton(coJoystick, 1);     // Start shooter then feeder(s)
+        btnAgitator.setButton(coJoystick, 3);    // Agitate the ball bin
     
         // Climb
-        btnClimber.setAxis(coJoystick, 8);     // Climber rotating
+        btnClimber.setButton(coJoystick, 8);     // Climber rotating
     
     }
 
@@ -169,20 +170,20 @@ public class JS_IO {
 
         btnGyroReset.setButton(gamePad, 7); //Reset / reset gyro to 0
 
-        btnHoldLeft.setAxis(gamePad, 4);    //Y / ??
-        btnHoldCenter.setAxis(gamePad,9);   //JSL / ??
-        btnHoldRight.setAxis(gamePad, 10);  //JSR / ??
+        btnHoldLeft.setButton(gamePad, 4);    //Y / ??
+        btnHoldCenter.setButton(gamePad,9);   //JSL / ??
+        btnHoldRight.setButton(gamePad, 10);  //JSR / ??
     
         // Gear
-        btnPickupGear.setAxis(gamePad, 1);  //A / Pickup gear off floor
-        btnPlaceGear.setAxis(gamePad, 2);   //B / Place gear on ship peg
+        btnPickupGear.setButton(gamePad, 1);  //A / Pickup gear off floor
+        btnPlaceGear.setButton(gamePad, 2);   //B / Place gear on ship peg
     
         // Shooter
-        btnShooter.setAxis(gamePad, 6);     //RT / Start shooter then feeder(s)
-        btnAgitator.setAxis(gamePad, 3);    //X /  Agitate the ball bin
+        btnShooter.setButton(gamePad, 6);     //RT / Start shooter then feeder(s)
+        btnAgitator.setButton(gamePad, 3);    //X /  Agitate the ball bin
     
         // Climb
-        btnClimber.setAxis(gamePad, 8);     //Start / Climber rotating
+        btnClimber.setButton(gamePad, 8);     //Start / Climber rotating
 
     }
 
@@ -199,20 +200,20 @@ public class JS_IO {
 
         btnGyroReset.setButton(rightJoystick, 6);    // reset gyro to 0
 
-        btnHoldLeft.setAxis(rightJoystick, 4);       //??
-        btnHoldCenter.setAxis(rightJoystick,3);      //??
-        btnHoldRight.setAxis(rightJoystick, 5);      //??
+        btnHoldLeft.setButton(rightJoystick, 4);       //??
+        btnHoldCenter.setButton(rightJoystick,3);      //??
+        btnHoldRight.setButton(rightJoystick, 5);      //??
     
         // Gear
-        btnPickupGear.setAxis(leftJoystick, 2);     // Pickup gear off floor
-        btnPlaceGear.setAxis( leftJoystick, 5);      // Place gear on ship peg
+        btnPickupGear.setButton(leftJoystick, 2);     // Pickup gear off floor
+        btnPlaceGear.setButton( leftJoystick, 5);      // Place gear on ship peg
     
         // Shooter
-        btnShooter.setAxis( leftJoystick, 1);     // Start shooter then feeder(s)
-        btnAgitator.setAxis(leftJoystick, 3);    // Agitate the ball bin
+        btnShooter.setButton( leftJoystick, 1);     // Start shooter then feeder(s)
+        btnAgitator.setButton(leftJoystick, 3);    // Agitate the ball bin
     
         // Climb
-        btnClimber.setAxis(leftJoystick, 8);     // Climber rotating
+        btnClimber.setButton(leftJoystick, 8);     // Climber rotating
 
     }
 
@@ -230,20 +231,20 @@ public class JS_IO {
 
         btnGyroReset.setButton(null, 0);    // reset gyro to 0
 
-        btnHoldLeft.setAxis(null, 0);       //??
-        btnHoldCenter.setAxis(null, 0);      //??
-        btnHoldRight.setAxis(null, 0);      //??
+        btnHoldLeft.setButton(null, 0);       //??
+        btnHoldCenter.setButton(null, 0);      //??
+        btnHoldRight.setButton(null, 0);      //??
     
         // Gear
-        btnPickupGear.setAxis(null, 0);     // Pickup gear off floor
-        btnPlaceGear.setAxis(null, 0);      // Place gear on ship peg
+        btnPickupGear.setButton(null, 0);     // Pickup gear off floor
+        btnPlaceGear.setButton(null, 0);      // Place gear on ship peg
     
         // Shooter
-        btnShooter.setAxis(null, 0);     // Start shooter then feeder(s)
-        btnAgitator.setAxis(null, 0);    // Agitate the ball bin
+        btnShooter.setButton(null, 0);     // Start shooter then feeder(s)
+        btnAgitator.setButton(null, 0);    // Agitate the ball bin
     
         // Climb
-        btnClimber.setAxis(null, 0);     // Climber rotating
+        btnClimber.setButton(null, 0);     // Climber rotating
 
     }
 }
