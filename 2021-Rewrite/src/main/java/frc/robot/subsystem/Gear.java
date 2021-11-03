@@ -82,6 +82,7 @@ public class Gear {
 	private static final double RELEASE_DELAY = 3.0;
 	private static final double ROTATE_TIMEOUT = 5.0;
 	private static final double PICKUP_DELAY = 0.9;
+	private static final double ALIGNMTRSPD = 0.25;
 	
     /**
      * Initialize objects for this SM. Usually called from autonomousInit or/and
@@ -99,7 +100,7 @@ public class Gear {
         if(btnPickupGear.onButtonPressed()) {
             state = 1;
         } else if(btnPlaceGear.onButtonPressed()) {
-            state = 11;
+            state = 11; //= 10;
         }
 
     }
@@ -114,7 +115,7 @@ public class Gear {
 
         switch (state) {
             case 0: // Default; gripBig, rotateDn, extendOut.  All retracted & motor off.
-                cmdUpdate(true, false, false);
+                cmdUpdate(true, false, false, false);
                 // if(btnPickupGear.onButtonPressed()) {
                 //     state = 1;
                 //     initialTime = Time.getTime();
@@ -125,21 +126,21 @@ public class Gear {
                 timer.hasExpired(0.0, state);   //Set timer for next state
                 break;
             case 1: // grip unexpanded, dn & in.  Wait for timer, up to dn rotation
-                cmdUpdate(false, true, false);
+                cmdUpdate(false, true, false, false);
                 if(!btnPickupGear.isDown()) {
-                    state = 2;
+                    state = 3;  //= 2;
                 } else if(gearFindBanner.get() && timer.hasExpired(PICKUP_DELAY, state)) {
-                    state = 2;
+                    state = 3;  //= 2;
                 }
                 break;
             // case 2: // Extend and start delay.
             //     cmdUpdate(false, true, true);
             //     initialTime = Time.getTime();
             //     state = 3;
-            case 2: // unexpanded, dn & out.  Wait to extend to stab gear
-                cmdUpdate(false, true, true);
+            case 3: // unexpanded, dn & out.  Wait to extend to stab gear
+                cmdUpdate(false, true, true, false);
                 if(timer.hasExpired(INSERT_DELAY, state)) {
-                    state = 4;
+                    state = 5;  //= 4;
                 }
                 break;
             // case 4: // Expand Collintor
@@ -147,15 +148,15 @@ public class Gear {
             //     initialTime = Time.getTime();
             //     state = 5;
             case 5: // expand, dn & exteded.  Wait for grip to lock gear
-                cmdUpdate(true, true, true);
+                cmdUpdate(true, true, true, false);
                 if(timer.hasExpired(GRAB_DELAY, state)) {
                     state = 6;
                 }
                 break;
             case 6: // expanded, dn, retract.  Wait until retract end sw. is true.
-                cmdUpdate(true, true, false);
+                cmdUpdate(true, true, false, false);
                 if(gearRetractedES.get()) {
-                    state = 7;
+                    state = 8;  //= 7;
                 }
                 break;
             // case 7: // Followup state as needed.
@@ -164,9 +165,9 @@ public class Gear {
             //     state = 8;
             //     break;
             case 8: // expanded, up, retracted.  Wait for dn to up transistion.
-                cmdUpdate(true, false, false);
+                cmdUpdate(true, false, false, false);
                 if(timer.hasExpired(START_ROTATE_DELAY, state)) {
-                    state = 12;
+                    state = 9;  //= 12;
                 }
                 break;
             // case 12: // 
@@ -176,13 +177,13 @@ public class Gear {
             //     gearRotatorMotor.set(0.25);
             //     break;
             case 9: // expanded, up, retracted.  twist gear until spoke aligned
-                cmdUpdate(true, false, false);
-                gearRotatorMotor.set(0.25);
+                cmdUpdate(true, false, false, true);
+                // gearRotatorMotor.set(0.25);
                 if(gearAlignBanner.get() || (timer.hasExpired(ROTATE_TIMEOUT, state))) {
-                    gearRotatorMotor.set(0.0);
+                    // gearRotatorMotor.set(0.0);
                     state = 0;
                 } else if(btnPickupGear.onButtonPressed()) {
-                    gearRotatorMotor.set(0.0);
+                    // gearRotatorMotor.set(0.0);
                     state = 1;
                 }
                 break;
@@ -192,7 +193,7 @@ public class Gear {
             //     state = 11;
             //     break;
             case 11: // unexpand, up, retracted.  Launch gear onto peg and wait to settle.
-                cmdUpdate(false, false, false);
+                cmdUpdate(false, false, false, false);
                 if(timer.hasExpired(RELEASE_DELAY, state)) {
                     state = 0;
                 } else if(btnPickupGear.onButtonPressed()) {
@@ -200,7 +201,7 @@ public class Gear {
                 }
                 break;
             default: // Always have a default, just incase.
-                cmdUpdate(false, false,false);
+                cmdUpdate(false, false,false, false);
                 System.out.println("Bad state for Gear - " + state);
         }
     }
@@ -211,10 +212,11 @@ public class Gear {
      * <p>
      * Any safeties, things that if not handled will cause damage, should be here.
      */
-    private static void cmdUpdate(boolean grip, boolean rotate, boolean extend) {
+    private static void cmdUpdate(boolean grip, boolean rotate, boolean extend, boolean align) {
         gripGearSV.set(grip);
         rotateDnSV.set(rotate);
         extendOutSV.set(extend);
+        gearRotatorMotor.set(align ? ALIGNMTRSPD : 0.0);
     }
 
     /** Initalize Smartdashbord items */
