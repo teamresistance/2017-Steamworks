@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.io.hdw_io.IO;
 import frc.robot.io.joysticks.JS_IO;
+import frc.robot.subsystem.Gear;
 import frc.robot.subsystem.Test_Hdw;
 import frc.robot.subsystem.drive.Drive;
 
@@ -54,14 +55,16 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    Test_Hdw.init();
+    // Test_Hdw.init();
+    Gear.init();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Test_Hdw.update();
+    // Test_Hdw.update();
     // Drive.update();
+    Gear.update();
   }
 
   /** This function is called once when the robot is disabled. */

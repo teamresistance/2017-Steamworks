@@ -57,7 +57,7 @@ go to state 1 to re grap the gear.  Fell off the peg?
 /**This is a framework for a TR86 subsystem state machine.
  * <p>Some hardware references have been left as examples.
  */
-public class Gear {
+public class Gear_Save {
     // Reference or Initialize hardware
     private static Solenoid gripGearSV = IO.gripSolenoid;
     private static Solenoid rotateDnSV = IO.rotateDnSolenoid;
@@ -100,8 +100,9 @@ public class Gear {
         if(btnPickupGear.onButtonPressed()) {
             state = 1;
         } else if(btnPlaceGear.onButtonPressed()) {
-            state = 10; //= 10;
+            state = 11; //= 10;
         }
+
     }
 
     /**
@@ -115,44 +116,67 @@ public class Gear {
         switch (state) {
             case 0: // Default; gripBig, rotateDn, extendOut, rotate mtr on.  All retracted & motor off.
                 cmdUpdate(true, false, false, false);
+                // if(btnPickupGear.onButtonPressed()) {
+                //     state = 1;
+                //     initialTime = Time.getTime();
+                // } else if(btnPlaceGear.onButtonPressed()) {
+                //     state = 10;
+                // }
+
                 timer.hasExpired(0.0, state);   //Set timer for next state
                 break;
-            //-----------------  Start Pickup Gear off floor  -----------------------
             case 1: // grip unexpanded, dn, in & off.  Wait for timer, up to dn rotation
                 cmdUpdate(false, true, false, false);
-                if(timer.hasExpired(PICKUP_DELAY, state)){
-                    if(!btnPickupGear.isDown()) {
-                        state = 0;  //= 2;
-                    } else if(gearFindBanner.get()) {
-                        state++;  //= 2;
-                    }
+                if(!btnPickupGear.isDown()) {
+                    state = 3;  //= 2;
+                } else if(gearFindBanner.get() && timer.hasExpired(PICKUP_DELAY, state)) {
+                    state = 3;  //= 2;
                 }
                 break;
-            case 2: // unexpanded, dn, out, off.  Wait to extend to stab gear
+            // case 2: // Extend and start delay.
+            //     cmdUpdate(false, true, true);
+            //     initialTime = Time.getTime();
+            //     state = 3;
+            case 3: // unexpanded, dn, out, off.  Wait to extend to stab gear
                 cmdUpdate(false, true, true, false);
                 if(timer.hasExpired(INSERT_DELAY, state)) {
-                    state++;  //= 4;
+                    state = 5;  //= 4;
                 }
                 break;
-            case 3: // expand, dn, exteded. off.  Wait for grip to lock gear
+            // case 4: // Expand Collintor
+            //     cmdUpdate(true, true, true);
+            //     initialTime = Time.getTime();
+            //     state = 5;
+            case 5: // expand, dn, exteded. off.  Wait for grip to lock gear
                 cmdUpdate(true, true, true, false);
                 if(timer.hasExpired(GRAB_DELAY, state)) {
-                    state++;
+                    state = 6;
                 }
                 break;
-            case 4: // expanded, dn, retract, off.  Wait until retract end sw. is true.
+            case 6: // expanded, dn, retract, off.  Wait until retract end sw. is true.
                 cmdUpdate(true, true, false, false);
                 if(gearRetractedES.get()) {
-                    state++;  //= 7;
+                    state = 8;  //= 7;
                 }
                 break;
-            case 5: // expanded, up, retracted, off.  Wait for dn to up transistion.
+            // case 7: // Followup state as needed.
+            //     cmdUpdate(true, false, false);
+            //     initialTime = Time.getTime();
+            //     state = 8;
+            //     break;
+            case 8: // expanded, up, retracted, off.  Wait for dn to up transistion.
                 cmdUpdate(true, false, false, false);
                 if(timer.hasExpired(START_ROTATE_DELAY, state)) {
-                    state++;  //= 12;
+                    state = 9;  //= 12;
                 }
                 break;
-            case 6: // expanded, up, retracted, ON.  twist gear until spoke aligned
+            // case 12: // 
+            //     cmdUpdate(false, true, true);
+            //     initialTime = Time.getTime();
+            //     state = 9;
+            //     gearRotatorMotor.set(0.25);
+            //     break;
+            case 9: // expanded, up, retracted, ON.  twist gear until spoke aligned
                 cmdUpdate(true, false, false, true);
                 // gearRotatorMotor.set(0.25);
                 if(gearAlignBanner.get() || (timer.hasExpired(ROTATE_TIMEOUT, state))) {
@@ -163,8 +187,12 @@ public class Gear {
                     state = 1;
                 }
                 break;
-            //---------------- Start Place Gear on peg  ---------------
-            case 10: // unexpand, up, retracted, off.  Launch gear onto peg and wait to settle.
+            // case 10: // 
+            //     cmdUpdate(false, false, false);
+            //     initialTime = Time.getTime();
+            //     state = 11;
+            //     break;
+            case 11: // unexpand, up, retracted, off.  Launch gear onto peg and wait to settle.
                 cmdUpdate(false, false, false, false);
                 if(timer.hasExpired(RELEASE_DELAY, state)) {
                     state = 0;
