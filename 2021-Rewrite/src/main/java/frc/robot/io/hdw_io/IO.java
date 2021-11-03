@@ -46,7 +46,7 @@ public class IO {
 	// Banner Sensors for Gear
 	public static InvertibleDigitalInput gearFindBanner = new InvertibleDigitalInput(1, true);
 	public static InvertibleDigitalInput gearAlignBanner = new InvertibleDigitalInput(2, true);
-	public static InvertibleDigitalInput gearRetractedLimit = new InvertibleDigitalInput(0, true);
+	public static InvertibleDigitalInput gearRetractedES = new InvertibleDigitalInput(0, true);
 
 	// Pneumatic Cylinders (controlled via Solenoids)
 	// public static SingleSolenoid gripSolenoid = new InvertibleSolenoid(1, 2, true);

@@ -39,7 +39,7 @@ public class Test_Hdw {
         IO.climberMotor.set(JS_IO.btnClimber.isDown() ? 1.0 : 0.0);         //GP 8 (Start)
   
         //Sensors
-        SmartDashboard.putBoolean("Test/0. Gear Retracted Limit", IO.gearRetractedLimit.get()); //DIO 0
+        SmartDashboard.putBoolean("Test/0. Gear Retracted Limit", IO.gearRetractedES.get()); //DIO 0
         SmartDashboard.putBoolean("Test/1. Gear Find Banner", IO.gearFindBanner.get());         //DIO 1
         SmartDashboard.putBoolean("Test/2. Gear Align Banner", IO.gearAlignBanner.get());       //DIO 2
 
