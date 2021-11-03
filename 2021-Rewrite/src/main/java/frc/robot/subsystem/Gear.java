@@ -60,7 +60,7 @@ go to state 1 to re grap the gear.  Fell off the peg?
 public class Gear {
     // Reference or Initialize hardware
     private static Solenoid gripGearSV = IO.gripSolenoid;
-    private static Solenoid rotateDnSV = IO.rotateSolenoid;
+    private static Solenoid rotateDnSV = IO.rotateDnSolenoid;
     private static Solenoid extendOutSV = IO.extendSolenoid;
     private static VictorSP gearRotatorMotor = IO.gearRotatorMotor;
     private static InvertibleDigitalInput gearFindBanner = IO.gearFindBanner;
@@ -114,7 +114,7 @@ public class Gear {
         sbdUpdate();// Update Smartdashboard stuff
 
         switch (state) {
-            case 0: // Default; gripBig, rotateDn, extendOut.  All retracted & motor off.
+            case 0: // Default; gripBig, rotateDn, extendOut, rotate mtr on.  All retracted & motor off.
                 cmdUpdate(true, false, false, false);
                 // if(btnPickupGear.onButtonPressed()) {
                 //     state = 1;
@@ -125,7 +125,7 @@ public class Gear {
 
                 timer.hasExpired(0.0, state);   //Set timer for next state
                 break;
-            case 1: // grip unexpanded, dn & in.  Wait for timer, up to dn rotation
+            case 1: // grip unexpanded, dn, in & off.  Wait for timer, up to dn rotation
                 cmdUpdate(false, true, false, false);
                 if(!btnPickupGear.isDown()) {
                     state = 3;  //= 2;
@@ -137,7 +137,7 @@ public class Gear {
             //     cmdUpdate(false, true, true);
             //     initialTime = Time.getTime();
             //     state = 3;
-            case 3: // unexpanded, dn & out.  Wait to extend to stab gear
+            case 3: // unexpanded, dn, out, off.  Wait to extend to stab gear
                 cmdUpdate(false, true, true, false);
                 if(timer.hasExpired(INSERT_DELAY, state)) {
                     state = 5;  //= 4;
@@ -147,13 +147,13 @@ public class Gear {
             //     cmdUpdate(true, true, true);
             //     initialTime = Time.getTime();
             //     state = 5;
-            case 5: // expand, dn & exteded.  Wait for grip to lock gear
+            case 5: // expand, dn, exteded. off.  Wait for grip to lock gear
                 cmdUpdate(true, true, true, false);
                 if(timer.hasExpired(GRAB_DELAY, state)) {
                     state = 6;
                 }
                 break;
-            case 6: // expanded, dn, retract.  Wait until retract end sw. is true.
+            case 6: // expanded, dn, retract, off.  Wait until retract end sw. is true.
                 cmdUpdate(true, true, false, false);
                 if(gearRetractedES.get()) {
                     state = 8;  //= 7;
@@ -164,7 +164,7 @@ public class Gear {
             //     initialTime = Time.getTime();
             //     state = 8;
             //     break;
-            case 8: // expanded, up, retracted.  Wait for dn to up transistion.
+            case 8: // expanded, up, retracted, off.  Wait for dn to up transistion.
                 cmdUpdate(true, false, false, false);
                 if(timer.hasExpired(START_ROTATE_DELAY, state)) {
                     state = 9;  //= 12;
@@ -176,7 +176,7 @@ public class Gear {
             //     state = 9;
             //     gearRotatorMotor.set(0.25);
             //     break;
-            case 9: // expanded, up, retracted.  twist gear until spoke aligned
+            case 9: // expanded, up, retracted, ON.  twist gear until spoke aligned
                 cmdUpdate(true, false, false, true);
                 // gearRotatorMotor.set(0.25);
                 if(gearAlignBanner.get() || (timer.hasExpired(ROTATE_TIMEOUT, state))) {
@@ -192,7 +192,7 @@ public class Gear {
             //     initialTime = Time.getTime();
             //     state = 11;
             //     break;
-            case 11: // unexpand, up, retracted.  Launch gear onto peg and wait to settle.
+            case 11: // unexpand, up, retracted, off.  Launch gear onto peg and wait to settle.
                 cmdUpdate(false, false, false, false);
                 if(timer.hasExpired(RELEASE_DELAY, state)) {
                     state = 0;

@@ -33,20 +33,20 @@ public class IO {
 
 	// Motors -- shooting
 	// public static CANTalon shooterMotor = new CANTalon(3);
-	public static TalonSRX shooterMotor = new TalonSRX(3);	//TalonSRX Maybe?
+	public static TalonSRX shooterMotor = new TalonSRX(3);		//Ball shooter
 
-	public static VictorSP feederMotor = new VictorSP(2);
-	public static VictorSP agitatorMotor = new VictorSP(6);
+	public static VictorSP feederMotor = new VictorSP(2);		//Ball Feeder to shooter
+	public static VictorSP agitatorMotor = new VictorSP(6);		//Ball agitiator (spinner)
+	public static VictorSP vibratorMotor = new VictorSP(0);		//Ball bin vibrator
 
 	// Motors -- other
-	public static VictorSP vibratorMotor = new VictorSP(0);
-	public static VictorSP gearRotatorMotor = new VictorSP(5);
-	public static VictorSP climberMotor = new VictorSP(9);
+	public static VictorSP gearRotatorMotor = new VictorSP(5);	//Gear rotator
+	public static VictorSP climberMotor = new VictorSP(9);		//Climber motor
 
 	// Banner Sensors for Gear
-	public static InvertibleDigitalInput gearFindBanner = new InvertibleDigitalInput(1, true);
-	public static InvertibleDigitalInput gearAlignBanner = new InvertibleDigitalInput(2, true);
-	public static InvertibleDigitalInput gearRetractedES = new InvertibleDigitalInput(0, true);
+	public static InvertibleDigitalInput gearFindBanner = new InvertibleDigitalInput(1, true);	//Gear in floor slot
+	public static InvertibleDigitalInput gearAlignBanner = new InvertibleDigitalInput(2, true);	//Gear spoke aligned
+	public static InvertibleDigitalInput gearRetractedES = new InvertibleDigitalInput(0, true);	//Gear finger is retracted
 
 	// Pneumatic Cylinders (controlled via Solenoids)
 	// public static SingleSolenoid gripSolenoid = new InvertibleSolenoid(1, 2, true);
@@ -54,7 +54,7 @@ public class IO {
 	// public static SingleSolenoid rotateSolenoid = new InvertibleSolenoid(1, 1, false);
 	public static InvertibleSolenoid gripSolenoid = new InvertibleSolenoid(1, 2, true);
 	public static InvertibleSolenoid extendSolenoid = new InvertibleSolenoid(1, 0, false);
-	public static InvertibleSolenoid rotateSolenoid = new InvertibleSolenoid(1, 1, false);
+	public static InvertibleSolenoid rotateDnSolenoid = new InvertibleSolenoid(1, 1, false);
 
 	// Relay for green LEDs
 	public static Relay cameraLights = new Relay(1);

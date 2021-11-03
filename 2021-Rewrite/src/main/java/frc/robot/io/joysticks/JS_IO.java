@@ -59,7 +59,9 @@ public class JS_IO {
 
     // Shooter
     public static Button btnShooter = new Button();     // Start shooter then feeder(s)
-    public static Button btnAgitator = new Button();    // Agitate the ball bin
+    public static Button btnTstAgitator = new Button(); // Test_Hdw, Agitate the balls (Center)
+    public static Button btnTstFdr = new Button();      // Test_Hdw, Feeder to shooter
+    public static Button btnTstVibrator = new Button(); // Test_Hdw, Vibrate the ball bin
 
     // Climb
     public static Button btnClimber = new Button();     // Climber rotating
@@ -150,7 +152,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton(coJoystick, 1);     // Start shooter then feeder(s)
-        btnAgitator.setButton(coJoystick, 3);    // Agitate the ball bin
+        btnTstAgitator.setButton(coJoystick, 3);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(coJoystick, 8);     // Climber rotating
@@ -173,14 +175,17 @@ public class JS_IO {
         btnHoldLeft.setButton(gamePad, 4);    //Y / ??
         btnHoldCenter.setButton(gamePad,9);   //JSL / ??
         btnHoldRight.setButton(gamePad, 10);  //JSR / ??
-    
+        povHoldLCR.setPov(gamePad, 0);        //for testing
+
         // Gear
         btnPickupGear.setButton(gamePad, 1);  //A / Pickup gear off floor
         btnPlaceGear.setButton(gamePad, 2);   //B / Place gear on ship peg
     
         // Shooter
         btnShooter.setButton(gamePad, 6);     //RT / Start shooter then feeder(s)
-        btnAgitator.setButton(gamePad, 3);    //X /  Agitate the ball bin
+        btnTstAgitator.setButton(gamePad, 4); //Y  / Agitate the balls (center rotator)
+        btnTstFdr.setButton(gamePad, 3);      //X  / Feeder to shooter
+        btnTstVibrator.setButton(gamePad, 5); //LT /  Vibrate the ball bin
     
         // Climb
         btnClimber.setButton(gamePad, 8);     //Start / Climber rotating
@@ -210,7 +215,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton( leftJoystick, 1);     // Start shooter then feeder(s)
-        btnAgitator.setButton(leftJoystick, 3);    // Agitate the ball bin
+        btnTstAgitator.setButton(leftJoystick, 3);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(leftJoystick, 8);     // Climber rotating
@@ -241,7 +246,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton(null, 0);     // Start shooter then feeder(s)
-        btnAgitator.setButton(null, 0);    // Agitate the ball bin
+        btnTstAgitator.setButton(null, 0);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(null, 0);     // Climber rotating
