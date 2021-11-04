@@ -27,7 +27,7 @@ public class Timer {
     }
 
     /**
-     * If chg of var, cov, set delay time once, then continue to call for expired time.
+     * If chg of var, cov, has changed, set delay time once, then continue to call for expired time.
      * @param delay in seconds
      * @param covTrgr set timer if trigger is different than the last check
      * @return  Timer has expired
@@ -42,7 +42,20 @@ public class Timer {
     }
 
     /**
-     * If chg of var, cov, set delay time once, then continue to call for expired time.
+     * If chg of var, cov, has changed, set delay time once, then continue to call for expired time.
+     * @param covTrgr set timer if trigger is different than the last check
+     * @return  Timer has expired
+     */
+    public boolean hasExpired(int covTrgr){
+        if(this.covTrgr != covTrgr){
+            timer = System.currentTimeMillis() + this.time;
+        }
+        this.covTrgr = covTrgr;
+        return hasExpired();
+    }
+
+    /**
+     * If  If trgr has changed, set delay time once, then continue to call for expired time.
      * @param delay in seconds
      * @param trgr set timer if trigger is different than the last check
      * @return  Timer has expired
@@ -50,6 +63,19 @@ public class Timer {
     public boolean hasExpired(double delay, boolean trgr){
         if(this.trgr != trgr){
             this.time = delay * 1000.0;
+            startTimer();
+        }
+        this.trgr = trgr;
+        return hasExpired();
+    }
+
+    /**
+     * If trgr has changed, set delay time once, then continue to call for expired time.
+     * @param trgr set timer if trigger is different than the last check
+     * @return  Timer has expired
+     */
+    public boolean hasExpired(boolean trgr){
+        if(this.trgr != trgr){
             startTimer();
         }
         this.trgr = trgr;
