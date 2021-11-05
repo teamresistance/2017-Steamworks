@@ -20,10 +20,12 @@ public class Climber {
     // Create objects for this SM
     private static int state = 0;
 
-    private static double ampClimber = IO.pdp.getCurrent(8);
+    private static double ampClimber() {return IO.pdp.getCurrent(8);}
     private static double ampHALmt = 70.0;
-    private static Timer ampHATmr = new Timer(0.1);
+    private static double ampHATm = 0.1;
+    private static Timer ampHATmr = new Timer(ampHATm);
     private static boolean ampHA = false;
+    private static boolean tstTmr = false;
 
     /**
      * Initialize objects for this SM. Usually called from autonomousInit or/and
@@ -39,7 +41,8 @@ public class Climber {
      */
     private static void determ() {
         if(btnClimb.onButtonPressed()) ampHA = false;
-        if(ampHATmr.hasExpired(ampClimber > ampHALmt) && !ampHA ) ampHA = true;
+        tstTmr = ampHATmr.hasExpired(ampHATm, ampClimber() > ampHALmt) && ampClimber() > ampHALmt;
+        if(tstTmr && !ampHA ) ampHA = true;
 
         if(btnClimb.isDown() && !ampHA){
             state = 1;
@@ -86,13 +89,16 @@ public class Climber {
     /** Initalize Smartdashbord items */
     private static void sbdInit() {
         SmartDashboard.putNumber("Climb/Amps Hi Alm Limit", ampHALmt);
+        SmartDashboard.putNumber("Climb/Amps Hi Alm Time", ampHATm);
     }
 
     /** Update Smartdashbord items */
     private static void sbdUpdate() {
         ampHALmt = SmartDashboard.getNumber("Climb/Amps Hi Alm Limit", ampHALmt);
-        SmartDashboard.putNumber("Climb/Amps", ampClimber);
+        ampHATm = SmartDashboard.getNumber("Climb/Amps Hi Alm Time", ampHATm);
+        SmartDashboard.putNumber("Climb/Amps", ampClimber());
         SmartDashboard.putBoolean("Climb/Amps Hi Alm", ampHA);
+        SmartDashboard.putBoolean("Climb/Test Timer", tstTmr);
     }
 
     /**

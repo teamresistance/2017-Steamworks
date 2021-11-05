@@ -13,7 +13,7 @@ public class Timer {
     private double time;            //Time in milli Seconds.  Passed as Seconds.
     private double timer;           //Current time + delay
     private int covTrgr = -1;       //Integer cov trigger
-    private boolean trgr = false;   //Boolean trigger
+    private Boolean trgr = null;   //Boolean trigger
 
     //Constructor
     /**
@@ -61,6 +61,7 @@ public class Timer {
      * @return  Timer has expired
      */
     public boolean hasExpired(double delay, boolean trgr){
+        if(this.trgr == null) this.trgr = !trgr;    //Initial trgr on first pass
         if(this.trgr != trgr){
             this.time = delay * 1000.0;
             startTimer();
@@ -75,6 +76,7 @@ public class Timer {
      * @return  Timer has expired
      */
     public boolean hasExpired(boolean trgr){
+        if(this.trgr == null) this.trgr = !trgr;    //Initial trgr on first pass
         if(this.trgr != trgr){
             startTimer();
         }

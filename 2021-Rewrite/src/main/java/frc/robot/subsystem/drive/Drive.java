@@ -22,8 +22,13 @@ public class Drive {
 
     public static void update()
     {
-        drv.driveCartesian(JS_IO.axLeftX.get(), JS_IO.axLeftY.get(), JS_IO.axRightX.get());
+        SmartDashboard.putNumber("drive/leftX", JS_IO.axLeftX.get());
+        SmartDashboard.putNumber("drive/leftY", JS_IO.axLeftY.get());
+        SmartDashboard.putNumber("drive/RightX", JS_IO.axRightX.get());
+
+        drv.driveCartesian(JS_IO.axLeftY.get(), JS_IO.axLeftX.get(), JS_IO.axRightX.get());
     }
+
 }
 //     public static VictorSP leftDrv = IO.leftDrv;
 //     public static VictorSP rightDrv = IO.rightDrv;

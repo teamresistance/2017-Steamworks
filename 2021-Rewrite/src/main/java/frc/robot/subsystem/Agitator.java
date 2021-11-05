@@ -13,7 +13,7 @@ import frc.util.Timer;
 public class Agitator {
     // Reference or Initialize hardware
     private static VictorSP agitator = IO.agitatorMotor;
-
+    private static double spdWSP = 0.5;
     // Reference or Initialize Joystick axis, buttons or pov
     private static Button btnAgitator = JS_IO.btnAgitator;
 
@@ -71,7 +71,8 @@ public class Agitator {
      */
     private static void cmdUpdate(boolean agitate) {
         if (agitate) {
-            IO.agitatorMotor.set(AGITATOR_SPD);
+            // IO.agitatorMotor.set(AGITATOR_SPD);
+            IO.agitatorMotor.set(spdWSP);
             IO.vibratorMotor.set(VIBRATOR_SPD);
         } else {
             IO.agitatorMotor.set(0.0);
@@ -81,10 +82,12 @@ public class Agitator {
 
     /** Initalize Smartdashbord items */
     private static void sdbInit() {
+        SmartDashboard.putNumber("Agitator/spd SP", spdWSP);
     }
 
     /** Update Smartdashbord items */
     private static void sdbUpdate() {
+        spdWSP = SmartDashboard.getNumber("Agitator/spd SP", spdWSP);
         SmartDashboard.putNumber("Agitator/State", state);
     }
 

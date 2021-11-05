@@ -27,6 +27,7 @@ public class Shooter {
     // Create objects for this SM
     private static int state = 0;
 
+    private static double spdWSP = 0.7;
     private static Timer timer = new Timer(0);
 
     private static double rpmToTpc = .07833333; // TBD rpm to ticks per cycle (100ms) // 47 ticks per 1 rotation
@@ -117,30 +118,35 @@ public class Shooter {
         if(shtrCmd){
             //-------------------- Old code ------------------
 			// shooter.set(ControlMode.Velocity, SmartDashboard.getNumber("Shooter Setpoint", 3100));
-			shooter.set(ControlMode.Velocity, Math.abs(rpmWSP) * rpmToTpc); // control as velocity (RPM)
+			// shooter.set(ControlMode.Velocity, Math.abs(rpmWSP) * rpmToTpc); // control as velocity (RPM)
+            shooter.set(ControlMode.PercentOutput, spdWSP);    //Coast down, DO NOT use 0 rpm sp
         }else{
+
             shooter.set(ControlMode.PercentOutput, 0.0);    //Coast down, DO NOT use 0 rpm sp
         }
 
-        feeder.set(shtrCmd ? 1.0 : 0.0);
+        feeder.set(status() ? 1.0 : 0.0);   //Shooter should be at speed before feeding balls.
     }
 
     /** Initalize Smartdashbord items */
     private static void sbdInit() {
         SmartDashboard.putNumber("Shooter/rpm Wrkg SP", rpmWSP);
+        SmartDashboard.putNumber("Shooter/Speed SP", spdWSP);
     }
 
     /** Update Smartdashbord items */
     private static void sbdUpdate() {
         rpmWSP = (int)SmartDashboard.getNumber("Shooter/rpm Wrkg SP", rpmWSP);
+        spdWSP = SmartDashboard.getNumber("Shooter/Speed SP", spdWSP);
 
         // Put general Shooter info on sdb
         SmartDashboard.putNumber("Shooter/State", state);
         SmartDashboard.putBoolean("Shooter/On", ((state == 1) ? true : false));
+        SmartDashboard.putBoolean("Shooter/Status", status());
 
         // Put Flywheel info on sdb
         SmartDashboard.putNumber("Shooter/Flywhl/Velocity", shooter.getSelectedSensorVelocity());
-        SmartDashboard.putNumber("Shooter/Flywhl/RPM", shooter.getSelectedSensorVelocity() * 600 / 47);
+        SmartDashboard.putNumber("Shooter/Flywhl/RPM", getRPM());
         SmartDashboard.putNumber("Shooter/Flywhl/SRX curr", shooter.getStatorCurrent());
         SmartDashboard.putNumber("Shooter/Flywhl/pdp curr", IO.pdp.getCurrent(2));
     }
@@ -155,8 +161,16 @@ public class Shooter {
     /**
      * @return Encoded status of Leds: snorf, lift2, lift1.
      */
-    public static int status(){
-        return 0;
+    public static boolean status(){
+        //return (getRPM() > 1000) && (state > 0);
+        return (state > 0);
+    }
+
+    /**
+     * @return the shooter RPM as an interger.
+     */
+    public static int getRPM(){
+        return (int)shooter.getSelectedSensorVelocity() * 600 / 47;
     }
 
 }
