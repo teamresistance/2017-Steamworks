@@ -59,7 +59,7 @@ public class JS_IO {
 
     // Shooter
     public static Button btnShooter = new Button();     // Start shooter then feeder(s)
-    public static Button btnTstAgitator = new Button(); // Test_Hdw, Agitate the balls (Center)
+    public static Button btnAgitator = new Button();    // Agitate the balls (Center)
     public static Button btnTstFdr = new Button();      // Test_Hdw, Feeder to shooter
     public static Button btnTstVibrator = new Button(); // Test_Hdw, Vibrate the ball bin
 
@@ -152,7 +152,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton(coJoystick, 1);     // Start shooter then feeder(s)
-        btnTstAgitator.setButton(coJoystick, 3);    // Agitate the ball bin
+        btnAgitator.setButton(coJoystick, 3);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(coJoystick, 8);     // Climber rotating
@@ -183,7 +183,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton(gamePad, 6);     //RT / Start shooter then feeder(s)
-        btnTstAgitator.setButton(gamePad, 4); //Y  / Agitate the balls (center rotator)
+        btnAgitator.setButton(gamePad, 4);    //Y  / Agitate the balls (center rotator)
         btnTstFdr.setButton(gamePad, 3);      //X  / Feeder to shooter
         btnTstVibrator.setButton(gamePad, 5); //LT /  Vibrate the ball bin
     
@@ -215,7 +215,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton( leftJoystick, 1);     // Start shooter then feeder(s)
-        btnTstAgitator.setButton(leftJoystick, 3);    // Agitate the ball bin
+        btnAgitator.setButton(leftJoystick, 3);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(leftJoystick, 8);     // Climber rotating
@@ -246,7 +246,7 @@ public class JS_IO {
     
         // Shooter
         btnShooter.setButton(null, 0);     // Start shooter then feeder(s)
-        btnTstAgitator.setButton(null, 0);    // Agitate the ball bin
+        btnAgitator.setButton(null, 0);    // Agitate the ball bin
     
         // Climb
         btnClimber.setButton(null, 0);     // Climber rotating

@@ -37,9 +37,9 @@ public class Test_Hdw {
 
         IO.shooterMotor.set(ControlMode.PercentOutput, 
                             (JS_IO.btnShooter.isDown() ? 1.0 : 0.0));       //GP 6 (RT)
-        IO.vibratorMotor.set(JS_IO.btnTstVibrator.isDown() ? 1.0 : 0.0);    //GP 5 (LT)
+        IO.vibratorMotor.set(JS_IO.btnTstVibrator.isDown() ? 0.6 : 0.0);    //GP 5 (LT)
         IO.feederMotor.set(JS_IO.btnTstFdr.isDown() ? 1.0 : 0.0);           //GP 3 (X)
-        IO.agitatorMotor.set(JS_IO.btnTstAgitator.isDown() ? 1.0 : 0.0);    //GP 4 (Y)
+        IO.agitatorMotor.set(JS_IO.btnAgitator.isDown() ? 0.3 : 0.0);       //GP 4 (Y)
         IO.gearRotatorMotor.set(JS_IO.btnPickupGear.isDown() ? 1.0 : 0.0);  //GP 1 (A)
         IO.climberMotor.set(JS_IO.btnClimber.isDown() ? 1.0 : 0.0);         //GP 8 (Start)
   
