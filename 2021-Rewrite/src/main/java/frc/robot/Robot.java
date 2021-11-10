@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // Test_Hdw.init();
-    // Drive.init();
+    Drive.init();
     Gear.init();
     Climber.init();
     Shooter.init();

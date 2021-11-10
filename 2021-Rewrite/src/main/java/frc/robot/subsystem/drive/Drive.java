@@ -18,7 +18,11 @@ import frc.robot.io.joysticks.JS_IO;
  * Add your docs here.
  */
 public class Drive {
-    public static MecanumDrive drv = new MecanumDrive(IO.leftFrontMotor, IO.leftRearMotor, IO.rightFrontMotor, IO.rightRearMotor);
+    private static MecanumDrive drv = new MecanumDrive(IO.leftFrontMotor, IO.leftRearMotor, IO.rightFrontMotor, IO.rightRearMotor);
+
+    public static void init(){
+
+    }
 
     public static void update()
     {
@@ -26,7 +30,7 @@ public class Drive {
         SmartDashboard.putNumber("drive/leftY", JS_IO.axLeftY.get());
         SmartDashboard.putNumber("drive/RightX", JS_IO.axRightX.get());
 
-        drv.driveCartesian(JS_IO.axLeftY.get(), JS_IO.axLeftX.get(), JS_IO.axRightX.get());
+        drv.driveCartesian(-JS_IO.axLeftX.get(), JS_IO.axLeftY.get(), JS_IO.axRightX.get());
     }
 
 }

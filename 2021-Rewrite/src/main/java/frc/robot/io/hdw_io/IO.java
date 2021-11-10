@@ -63,8 +63,8 @@ public class IO {
 
     /**Initialize any hardware.  Usually called from robotInit in Robot. */
     public static void init() {
-		IO.rightFrontMotor.setInverted(true);
-		IO.rightRearMotor.setInverted(true);
+		// IO.rightFrontMotor.setInverted(true);
+		// IO.rightRearMotor.setInverted(true);
 
 		IO.climberMotor.setInverted(true);
 
