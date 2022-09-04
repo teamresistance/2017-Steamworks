@@ -1,22 +1,32 @@
 package frc.robot.io.hdw_io;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class InvertibleSolenoid extends Solenoid implements ISolenoid {
 
     private final boolean isInverted;
 
     // Default Solenoid Constructor, not inverted
-    public InvertibleSolenoid(int module, int channel) {
-        this(module, channel, false);
+    public InvertibleSolenoid(PneumaticsModuleType module, int channel) {
+        this(0, module, channel, false);
     }
-    // Constructor to Makes Solenoid Object
-    public InvertibleSolenoid(int module, int channel, boolean isInverted) {
-        super(module, channel);
+
+    public InvertibleSolenoid(int moduleNumber, PneumaticsModuleType module, int channel) {
+        this(moduleNumber, module, channel, false);
+    }
+
+    // Constructor to Make Solenoid Object
+    public InvertibleSolenoid(PneumaticsModuleType module, int channel, boolean isInverted) {
+        this(0, module, channel, isInverted);
+    }
+
+    public InvertibleSolenoid(int moduleNumber, PneumaticsModuleType module, int channel, boolean isInverted) {
+        super(moduleNumber, module, channel);
         this.isInverted = isInverted;
     }
 
-    //This activates the Solenoid
+    // This activates the Solenoid
     @Override
     public void set(boolean state) {
         if (isInverted) {
@@ -26,7 +36,7 @@ public class InvertibleSolenoid extends Solenoid implements ISolenoid {
         }
     }
 
-    public boolean get(){
+    public boolean get() {
         return (isInverted ? !super.get() : super.get());
     }
 

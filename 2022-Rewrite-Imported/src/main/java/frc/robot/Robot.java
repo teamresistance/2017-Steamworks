@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    IO.compressorRelay.set(IO.compressor.enabled() ? Relay.Value.kForward : Relay.Value.kOff);
+    IO.compressorRelay.set(IO.compressor1.enabled() ? Relay.Value.kForward : Relay.Value.kOff);
   }
 
   /** This function is called once when autonomous is enabled. */

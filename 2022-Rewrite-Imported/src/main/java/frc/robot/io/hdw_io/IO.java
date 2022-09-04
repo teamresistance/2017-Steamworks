@@ -1,11 +1,13 @@
 package frc.robot.io.hdw_io;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -19,10 +21,10 @@ public class IO {
 	public static NavX navX = new NavX();
 
     // PDP
-    public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+    public static PowerDistribution pdp = new PowerDistribution(0,ModuleType.kCTRE);
 
     // Air
-    public static Compressor compressor = new Compressor(1);
+    public static Compressor compressor1 = new Compressor(1,PneumaticsModuleType.CTREPCM);
     public static Relay compressorRelay = new Relay(0);
 
     // Drive Motors
@@ -53,9 +55,9 @@ public class IO {
 	// public static SingleSolenoid gripSolenoid = new InvertibleSolenoid(1, 2, true);
 	// public static SingleSolenoid extendSolenoid = new InvertibleSolenoidWithPosition(1, 0, false, gearRetractedLimit);
 	// public static SingleSolenoid rotateSolenoid = new InvertibleSolenoid(1, 1, false);
-	public static InvertibleSolenoid gripSolenoid = new InvertibleSolenoid(1, 2, true);
-	public static InvertibleSolenoid extendSolenoid = new InvertibleSolenoid(1, 0, false);
-	public static InvertibleSolenoid rotateDnSolenoid = new InvertibleSolenoid(1, 1, false);
+	public static InvertibleSolenoid gripSolenoid = new InvertibleSolenoid(1, PneumaticsModuleType.CTREPCM, 2, true);
+	public static InvertibleSolenoid extendSolenoid = new InvertibleSolenoid(1, PneumaticsModuleType.CTREPCM, 0, false);
+	public static InvertibleSolenoid rotateDnSolenoid = new InvertibleSolenoid(1, PneumaticsModuleType.CTREPCM, 1, false);
 
 	// Relay for green LEDs
 	public static Relay cameraLights = new Relay(1);
